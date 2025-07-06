@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router";
+import { NavLink, Link } from "react-router";
 import icon from "../assets/images/logo.svg";
 import menu from "../assets/images/icon-menu.svg";
 import cartIcon from "../assets/images/icon-cart.svg";
@@ -15,7 +15,7 @@ const Navbar = () => {
     <>
       <nav className="flex border-b-2 mx-2 lg:ml-5 lg:mr-4 items-center h-max pt-3 px-3 border-Grayishblue relative">
         {/* <div>
-          <img src={menu} alt="" srcset="" />
+          <img src={menu} alt="" srcSet="" />
         </div> */}
         <div>
           <img src={icon} alt="" />
@@ -45,10 +45,12 @@ const Navbar = () => {
         </ul>
         <div className="w-full flex justify-end items-center gap-2">
           <span className="h-8 w-8 flex items-center justify-center">
-            <img src={cartIcon} alt="" srcset="" />
+            <Link to="cart" className="relative">
+              <img src={cartIcon} alt="" srcSet="" />
+            </Link>
           </span>
           <span className="h-10 w-10 block">
-            <img src={avatarIcon} alt="" srcset="" />
+            <img src={avatarIcon} alt="" srcSet="" />
           </span>
         </div>
         <div className=""></div>
