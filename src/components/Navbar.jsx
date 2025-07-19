@@ -4,11 +4,16 @@ import icon from "../assets/images/logo.svg";
 import menu from "../assets/images/icon-menu.svg";
 import cartIcon from "../assets/images/icon-cart.svg";
 import avatarIcon from "../assets/images/image-avatar.png";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AppContext } from "../App";
 import Cart from "./Cart";
+import "../index.css";
 
 const Navbar = () => {
-  // const [menu, setMenu] = useState(false);
+  const { setIsCartOpen, cartOpen } = useContext(AppContext);
+  const setCart = () => {
+    setIsCartOpen((prevState) => (prevState ? false : true));
+  };
   const linkActive = ({ isActive }) =>
     isActive ? "border-b-4 border-Orange py-3" : " py-3";
   return (
@@ -44,10 +49,11 @@ const Navbar = () => {
           </li>
         </ul>
         <div className="w-full flex justify-end items-center gap-2">
-          <span className="h-8 w-8 flex items-center justify-center">
-            <Link to="cart" className="relative">
-              <img src={cartIcon} alt="" srcSet="" />
-            </Link>
+          <span
+            className="h-8 w-8 flex items-center justify-center"
+            onClick={() => setCart()}
+          >
+            <img src={cartIcon} alt="" srcSet="" />
           </span>
           <span className="h-10 w-10 block">
             <img src={avatarIcon} alt="" srcSet="" />

@@ -31,4 +31,6 @@
   --color-Lightgrayishblue: hsl(223, 64%, 98%);
   --color-White: hsl(0, 0%, 100%);
   /* - Black (with 75% opacity for lightbox background): hsl(0, 0%, 0%) */
+
+  --cart-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }

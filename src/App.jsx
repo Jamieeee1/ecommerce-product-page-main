@@ -21,14 +21,14 @@ const initialItems = [
     brand: "Sneaker Company",
     description:
       "These low-profile sneakers are your perfect casual wear companion. Featuring a durable rubber outer sole, they’ll withstand everything the weather can offer",
-    image1: "/assets/images/image-product-1.jpg",
-    image1Thumbnail: "/assets/images/image-product-1-thumbnail.jpg",
-    image2: "/assets/images/image-product-2.jpg",
-    image2Thumbnail: "/assets/images/image-product-2-thumbnail.jpg",
-    image3: "/assets/images/image-product-3.jpg",
-    image3Thumbnail: "/assets/images/image-product-3-thumbnail.jpg",
-    image4: "/assets/images/image-product-4.jpg",
-    image4Thumbnail: "/assets/images/image-product-4-thumbnail.jpg",
+    image1: "../images/image-product-1.jpg",
+    image1Thumbnail: "../images/image-product-1-thumbnail.jpg",
+    image2: "../images/image-product-2.jpg",
+    image2Thumbnail: "../images/image-product-2-thumbnail.jpg",
+    image3: "../images/image-product-3.jpg",
+    image3Thumbnail: "../images/image-product-3-thumbnail.jpg",
+    image4: "../images/image-product-4.jpg",
+    image4Thumbnail: "../images/image-product-4-thumbnail.jpg",
     price: 125.0,
     quantity: 0,
     totalPrice: 0,
@@ -40,14 +40,14 @@ const initialItems = [
     brand: "Sneaker Company",
     description:
       "These low-profile sneakers are your perfect casual wear companion. Featuring a durable rubber outer sole, they’ll withstand everything the weather can offer. Comfortable and stylish, these sneakers are a must-have for any wardrobe.",
-    image1: "/assets/images/image-product-1.jpg",
-    image1Thumbnail: "/assets/images/image-product-1-thumbnail.jpg",
-    image2: "/assets/images/image-product-2.jpg",
-    image2Thumbnail: "/assets/images/image-product-2-thumbnail.jpg",
-    image3: "/assets/images/image-product-3.jpg",
-    image3Thumbnail: "/assets/images/image-product-3-thumbnail.jpg",
-    image4: "/assets/images/image-product-4.jpg",
-    image4Thumbnail: "/assets/images/image-product-4-thumbnail.jpg",
+    image1: "../images/image-product-1.jpg",
+    image1Thumbnail: "../images/image-product-1-thumbnail.jpg",
+    image2: "../images/image-product-2.jpg",
+    image2Thumbnail: "../images/image-product-2-thumbnail.jpg",
+    image3: "../images/image-product-3.jpg",
+    image3Thumbnail: "../images/image-product-3-thumbnail.jpg",
+    image4: "../images/image-product-4.jpg",
+    image4Thumbnail: "../images/image-product-4-thumbnail.jpg",
     price: 125.0,
     quantity: 0,
     totalPrice: 0,
@@ -57,7 +57,6 @@ const initialItems = [
 export const AppContext = React.createContext();
 const AppProvider = ({ children }) => {
   const [items, setItems] = useState(initialItems);
-  const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const manipulatingQuantity = (id, action) => {
@@ -73,62 +72,39 @@ const AppProvider = ({ children }) => {
     );
   };
 
-  const addToCart = (item) => {
-    setItems((prevItems) => {
-      return prevItems.map((prevItem) =>
-        prevItem.id === item.id
-          ? { ...prevItem, quantity: prevItem.quantity + 1 }
-          : prevItem
-      );
-    });
-
-    setCart((prevCart) => {
-      return [...prevCart, { ...item, quantity: 1 }];
-    });
-  };
-
   const increaseQuantity = (id) => {
-    setCart((prevCart) =>
-      prevCart.map((cartItem) =>
-        cartItem.id === id
-          ? { ...cartItem, quantity: cartItem.quantity + 1 }
-          : cartItem
-      )
-    );
-    console.log(items);
     manipulatingQuantity(id, "increase");
   };
 
   const decreaseQuantity = (id) => {
-    setCart((prevCart) =>
-      prevCart
-        .map((cartItem) =>
-          cartItem.id === id
-            ? { ...cartItem, quantity: cartItem.quantity - 1 }
-            : cartItem
-        )
-        .filter((cartItem) => cartItem.quantity > 0)
-    );
     manipulatingQuantity(id, "decrease");
   };
 
-  const removeFromCart = (id) => {
-    setCart((prevCart) => prevCart.filter((cartItem) => cartItem.id !== id));
+  const cartItems = items.filter((item) => item.quantity > 0);
+
+  const resetItem = (id) => {
+    setItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              quantity: 0,
+            }
+          : item
+      )
+    );
   };
 
   return (
     <AppContext.Provider
       value={{
         items,
-        setItems,
-        cart,
-        setCart,
         isCartOpen,
         setIsCartOpen,
-        addToCart,
         increaseQuantity,
         decreaseQuantity,
-        removeFromCart,
+        cartItems,
+        resetItem,
       }}
     >
       {children}
